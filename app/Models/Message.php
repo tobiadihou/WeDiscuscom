@@ -21,4 +21,20 @@ class Message extends Model
         'goupe_id',
         'conversation_id',
     ];
+
+    public function sender(){
+        return $this->belongsTo(User::class,'sender_id');
+    }
+    public function recever(){
+
+        return $this->belongsTo(User::class,'receiver_id');
+    }
+    public function groupe(){
+
+        return $this->belongsTo(Groupe::class,);
+    }
+    public function attachement(){
+
+        return $this->hasMany(MessageAttachement::class,);
+    }
 }
