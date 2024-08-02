@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Conversation;
 use App\Models\Groupe;
 use App\Models\Message;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -49,8 +51,20 @@ class DatabaseSeeder extends Seeder
        $messages = Message::wherenull('groupe_id')->orderBy('created_at')->get();
        $conversation = $messages->groupBy(function (Message $message)
        {
-        return collect($message);
-       });
+        return collect([$message->sender_id,$message->receiver_id])
+        ->sort()->implode('_');
+       })->map(function  ($groupeMessages)
+       {
+            return [
+                'user_id'=>$groupeMessages->first()->sender_id,
+                'user_id2'=>$groupeMessages->first()->receiver_id,
+                'last_message_id'=>$groupeMessages->last()->id,
+                'created_at'=>Carbon::now(),
+                'updated_at'=>Carbon::now(),
+
+            ];
+       })->values();
+       Conversation::insert($conversation->toArray());
         $this->command->info('seedage terminé avec succès');
     }
 }

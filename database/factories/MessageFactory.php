@@ -36,15 +36,15 @@ class MessageFactory extends Factory
             $receverId = fake()->randomElement(array_diff($userId,[$sendId]));
         }
         $conversationID = null;
-        if(!$isGoupeMessage){
-            $conversationID= Conversation::firstOrCreate(
-            [
-                'user_id' =>min($sendId,$receverId),
-                'user_id2' =>max($sendId,$receverId)
-            ],[
-                'last_message_id'=>null,
-            ]);
-        }
+        // if(!$isGoupeMessage){
+        //     $conversationID= Conversation::firstOrCreate(
+        //     [
+        //         'user_id' =>min($sendId,$receverId),
+        //         'user_id2' =>max($sendId,$receverId)
+        //     ],[
+        //         'last_message_id'=>null,
+        //     ]);
+        // }
         return [
         'message'=>fake()->realText(),
         'sender_id'=>$sendId,
