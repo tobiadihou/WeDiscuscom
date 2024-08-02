@@ -20,12 +20,10 @@ return new class extends Migration
             $table->foreignId('conversation_id')->constrained('conversations');
             $table->timestamps();
         });
-        Schema::create('groupes', function (Blueprint $table) {
-
+        Schema::table('groupes', function (Blueprint $table) {
             $table->foreignId('last_message_id')->nullable()->constrained('messages');
         });
-        Schema::create('conversations', function (Blueprint $table) {
-
+        Schema::table('conversations', function (Blueprint $table) {
             $table->foreignId('last_message_id')->nullable()->constrained('messages');
         });
     }
