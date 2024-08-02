@@ -18,8 +18,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'avatar',
         'email',
         'password',
+        'is_admin',
+        'blocked_at',
     ];
 
     /**
@@ -43,5 +46,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function groupes(){
+        return $this->belongsToMany(Groupe::class,'groupe_user');
+    }
+
+    public function messages(){
+        return $this->hasMany(Message::class);
     }
 }
